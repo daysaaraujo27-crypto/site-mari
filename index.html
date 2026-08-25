@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mari, casa comigo?</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 22px;
+      background: radial-gradient(circle at top, #fff7fb 0%, #ffe7f1 26%, #ffd5e8 58%, #ffc4d8 100%);
+      color: #6f3650;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      position: relative;
+      overflow: hidden;
+    }
+
+    body::before,
+    body::after {
+      content: "";
+      position: absolute;
+      width: 320px;
+      height: 320px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.18);
+      filter: blur(10px);
+      z-index: 0;
+    }
+
+    body::before {
+      top: -80px;
+      left: -60px;
+    }
+
+    body::after {
+      right: -70px;
+      bottom: -100px;
+    }
+
+    .card {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 22px;
+      background: rgba(255, 255, 255, 0.36);
+      border: 1px solid rgba(255, 255, 255, 0.6);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border-radius: 30px;
+      padding: 42px 36px;
+      box-shadow: 0 20px 50px rgba(193, 110, 150, 0.2);
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(2.1rem, 4vw, 3.3rem);
+      text-align: center;
+      line-height: 1.25;
+      padding: 0 12px;
+      color: #f581ce;
+      text-shadow: 0 2px 10px rgba(255, 255, 255, 0.5);
+    }
+
+    .botoes {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 18px;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      z-index: 2;
+    }
+
+    button {
+      border: none;
+      border-radius: 999px;
+      font-size: 18px;
+      font-weight: 700;
+      padding: 15px 28px;
+      cursor: pointer;
+      transition: transform 0.22s ease, box-shadow 0.22s ease, filter 0.22s ease;
+      box-shadow: 0 12px 24px rgba(216, 114, 162, 0.24);
+      letter-spacing: 0.5px;
+    }
+
+    button:hover {
+      transform: translateY(-2px) scale(1.04);
+      filter: brightness(1.04);
+    }
+
+    #sim {
+      background: linear-gradient(135deg, #ff6fa9, #ff4d88);
+      color: white;
+    }
+
+    #nao {
+      background: rgba(255, 255, 255, 0.8);
+      color: #7d4255;
+      position: relative;
+      border: 1px solid rgba(214, 127, 166, 0.35);
+    }
+
+    .coracao {
+      position: fixed;
+      bottom: -10px;
+      font-size: 24px;
+      animation: subir 4.5s ease-in forwards;
+      user-select: none;
+      pointer-events: none;
+      z-index: 1;
+      filter: drop-shadow(0 6px 12px rgba(255, 108, 168, 0.35));
+    }
+
+    @keyframes subir {
+      0% {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-110vh) scale(1.5);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1 id="titulo">Mari, casa comigo?</h1>
+
+    <div class="botoes">
+      <button id="sim">SIM!</button>
+      <button id="nao">Não</button>
+    </div>
+  </div>
+
+  <script>
+    const botaoSim = document.getElementById("sim");
+    const botaoNao = document.getElementById("nao");
+    const titulo = document.getElementById("titulo");
+
+    let tamanhoSim = 18;
+
+    const fugir = () => {
+      const larguraJanela = window.innerWidth - 220;
+      const alturaJanela = window.innerHeight - 220;
+
+      const novoX = Math.random() * larguraJanela;
+      const novoY = Math.random() * alturaJanela;
+
+      botaoNao.style.position = "absolute";
+      botaoNao.style.left = `${novoX}px`;
+      botaoNao.style.top = `${novoY}px`;
+
+      tamanhoSim += 8;
+      botaoSim.style.fontSize = `${tamanhoSim}px`;
+      botaoSim.style.padding = "16px 30px";
+    };
+
+    botaoNao.addEventListener("mouseover", fugir);
+    botaoNao.addEventListener("touchstart", fugir);
+    botaoNao.addEventListener("click", fugir);
+
+    const criarChuvaDeCoracoes = () => {
+      const totalCoracoes = 60;
+
+      for (let i = 0; i < totalCoracoes; i++) {
+        const coracao = document.createElement("div");
+        coracao.classList.add("coracao");
+        coracao.innerHTML = "💖";
+
+        coracao.style.left = `${Math.random() * window.innerWidth}px`;
+        coracao.style.fontSize = `${18 + Math.random() * 30}px`;
+        coracao.style.animationDuration = `${3 + Math.random() * 3}s`;
+        coracao.style.animationDelay = `${Math.random() * 0.9}s`;
+
+        document.body.appendChild(coracao);
+
+        setTimeout(() => {
+          coracao.remove();
+        }, 5000);
+      }
+    };
+
+    botaoSim.addEventListener("click", () => {
+      titulo.innerHTML = "Sabia 💕🌹 <br>Mari, casa comigo! Não tens opção.";
+      botaoNao.style.display = "none";
+      botaoSim.style.display = "none";
+      document.body.style.background = "radial-gradient(circle at top, #fffafc 0%, #ffe4ef 25%, #ffc7dc 55%, #ffb0c9 100%)";
+      criarChuvaDeCoracoes();
+    });
+  </script>
+</body>
+</html>
