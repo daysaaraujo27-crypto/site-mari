@@ -152,7 +152,7 @@
 
     let tamanhoSim = 18;
     let fugas = 0;
-    const limiteDeFugas = 8;
+    const limiteDeFugas = 30;
 
     const fugir = () => {
       if (fugas >= limiteDeFugas) {
@@ -167,7 +167,7 @@
       const novoX = Math.random() * larguraJanela;
       const novoY = Math.random() * alturaJanela;
 
-      botaoNao.style.position = "absolute";
+      botaoNao.style.position = "fixed";
       botaoNao.style.left = `${novoX}px`;
       botaoNao.style.top = `${novoY}px`;
 
@@ -180,8 +180,6 @@
       }
     };
 
-    botaoNao.addEventListener("mouseover", fugir);
-    botaoNao.addEventListener("touchstart", fugir);
     botaoNao.addEventListener("click", fugir);
 
     const criarChuvaDeCoracoes = () => {
