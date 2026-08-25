@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Mari, casa comigo?</title>
+  <title>Mari, casa comigo para ontem? </title>
   <style>
     * {
       box-sizing: border-box;
@@ -137,7 +137,7 @@
 </head>
 <body>
   <div class="card">
-    <h1 id="titulo">Mari, casa comigo?</h1>
+    <h1 id="titulo">Mari, casa comigo para ontem?</h1>
 
     <div class="botoes">
       <button id="sim">SIM!</button>
@@ -151,10 +151,18 @@
     const titulo = document.getElementById("titulo");
 
     let tamanhoSim = 18;
+    let fugas = 0;
+    const limiteDeFugas = 8;
 
     const fugir = () => {
-      const larguraJanela = window.innerWidth - 220;
-      const alturaJanela = window.innerHeight - 220;
+      if (fugas >= limiteDeFugas) {
+        return;
+      }
+
+      fugas++;
+
+      const larguraJanela = Math.max(0, window.innerWidth - botaoNao.offsetWidth - 24);
+      const alturaJanela = Math.max(0, window.innerHeight - botaoNao.offsetHeight - 24);
 
       const novoX = Math.random() * larguraJanela;
       const novoY = Math.random() * alturaJanela;
@@ -166,6 +174,10 @@
       tamanhoSim += 8;
       botaoSim.style.fontSize = `${tamanhoSim}px`;
       botaoSim.style.padding = "16px 30px";
+
+      if (fugas === limiteDeFugas) {
+        botaoNao.textContent = "Não (última chance)";
+      }
     };
 
     botaoNao.addEventListener("mouseover", fugir);
@@ -178,7 +190,7 @@
       for (let i = 0; i < totalCoracoes; i++) {
         const coracao = document.createElement("div");
         coracao.classList.add("coracao");
-        coracao.innerHTML = "💖";
+        coracao.innerHTML = "💕";
 
         coracao.style.left = `${Math.random() * window.innerWidth}px`;
         coracao.style.fontSize = `${18 + Math.random() * 30}px`;
@@ -194,7 +206,7 @@
     };
 
     botaoSim.addEventListener("click", () => {
-      titulo.innerHTML = "Sabia 💕🌹 <br>Mari, casa comigo! Não tens opção.";
+      titulo.innerHTML = "hehe <br> não tens opção 💕🌹💕🌹";
       botaoNao.style.display = "none";
       botaoSim.style.display = "none";
       document.body.style.background = "radial-gradient(circle at top, #fffafc 0%, #ffe4ef 25%, #ffc7dc 55%, #ffb0c9 100%)";
